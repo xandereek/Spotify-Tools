@@ -21,5 +21,6 @@ def export_to_csv(file_name, tracks):
                 track_name, artist_name = track.split(" - ", 1)
             except ValueError:
                     track_name, artist_name = track, ""
-                    writer.writerow([track_name, artist_name])
+            
+            writer.writerow([track_name, artist_name])
         print(f"Saved {len(tracks)} tracks to {file_name}.csv")
