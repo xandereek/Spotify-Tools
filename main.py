@@ -1,14 +1,11 @@
 import spotipy
 import auth
 import fetcher
+import exporter
 
 sp = auth.get_spotify_client()
+export_format = input("Export format? TXT(1), JSON(2), CSV(3): ")
 
-def create_file(file_name, tracks):
-    with open(f"{file_name}.txt", "w", encoding="utf-8") as f:
-        for song in tracks:
-            f.write(song + "\n")
-    print(f"Saved {len(tracks)} tracks to {file_name}.txt")
 
 
 
@@ -27,13 +24,31 @@ if playlist_or_liked == 1:
     playlist_name = selected_playlist['name']
 
     print(f"You selected: {playlist_name} ID: {playlist_id}\n")
+
     playlist_tracks = fetcher.playlist_fetcher(sp, playlist_id)
 
-    create_file(playlist_name, playlist_tracks)
+    if export_format == "1":
+        exporter.export_to_txt(playlist_name, playlist_tracks)
+    elif export_format == "2":
+        exporter.export_to_json(playlist_name, playlist_tracks)
+    elif export_format == "3":
+        exporter.export_to_csv(playlist_name, playlist_tracks)
+    else:
+        print("Invalid format selected. Defaulting to TXT.")
+        exporter.export_to_txt(playlist_name, playlist_tracks)
 
 elif playlist_or_liked == 2:
     liked_tracks = fetcher.fetch_liked_songs(sp)
-    create_file("liked songs", liked_tracks)
+
+    if export_format == "1":
+        exporter.export_to_txt("liked songs", liked_tracks)
+    elif export_format == "2":
+        exporter.export_to_json("liked songs", liked_tracks)
+    elif export_format == "3":
+        exporter.export_to_csv("liked songs", liked_tracks)
+    else:
+        print("Invalid format selected. Defaulting to TXT.")
+        exporter.export_to_txt("liked songs", liked_tracks)
 
     
 
