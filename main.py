@@ -4,7 +4,7 @@ import fetcher
 import exporter
 
 sp = auth.get_spotify_client()
-export_format = input("Export format? TXT(1), JSON(2), CSV(3): ")
+
 
 
 
@@ -26,7 +26,7 @@ if playlist_or_liked == 1:
     print(f"You selected: {playlist_name} ID: {playlist_id}\n")
 
     playlist_tracks = fetcher.playlist_fetcher(sp, playlist_id)
-
+    export_format = input("Export format? TXT(1), JSON(2), CSV(3): ")
     if export_format == "1":
         exporter.export_to_txt(playlist_name, playlist_tracks)
     elif export_format == "2":
@@ -38,8 +38,8 @@ if playlist_or_liked == 1:
         exporter.export_to_txt(playlist_name, playlist_tracks)
 
 elif playlist_or_liked == 2:
+    export_format = input("Export format? TXT(1), JSON(2), CSV(3): ")
     liked_tracks = fetcher.fetch_liked_songs(sp)
-
     if export_format == "1":
         exporter.export_to_txt("liked songs", liked_tracks)
     elif export_format == "2":
