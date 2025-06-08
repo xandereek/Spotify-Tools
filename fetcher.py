@@ -1,7 +1,7 @@
-
+import logging
 
 def playlist_fetcher(sp, playlist_id):
-    print("Gettings tracks...")
+    logging.info("Fetching liked songs..")
 
     playlist_tracks = [] 
     limit = 100
@@ -23,7 +23,7 @@ def playlist_fetcher(sp, playlist_id):
         offset += limit
     return playlist_tracks
 def fetch_liked_songs(sp):
-    print("Gettings tracks...")
+    logging.info("Fetching liked songs..")
 
     liked_tracks = []
     limit = 50
