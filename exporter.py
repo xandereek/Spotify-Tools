@@ -17,6 +17,7 @@ def export_to_json(file_name, tracks):
             {"artist":artist_name, "track": track_name} for artist_name, track_name in tracks
         ]
         json.dump(track_list, f, indent=2)
+
     logging.info("Saved %d tracks to %s.json", len(track_list), file_name)
 
 def export_to_csv(file_name, tracks):
