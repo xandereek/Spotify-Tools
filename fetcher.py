@@ -1,9 +1,8 @@
 import logging
 
 def playlist_fetcher(sp, playlist_id):
-    logging.info("Fetching liked songs..")
+    logging.info("Fetching playlist tracks..")
 
-    playlist_tracks = [] 
     limit = 100
     offset = 0
 
@@ -18,14 +17,12 @@ def playlist_fetcher(sp, playlist_id):
             track = i['track']
             track_name = track['name']
             artist_name = track['artists'][0]['name']
-            playlist_tracks.append(f"{track_name} - {artist_name}")
-        
+            yield (track_name, artist_name)
+             ##playlist_tracks.append(f"{track_name} - {artist_name}")
         offset += limit
-    return playlist_tracks
+
 def fetch_liked_songs(sp):
     logging.info("Fetching liked songs..")
-
-    liked_tracks = []
     limit = 50
     offset = 0
 
@@ -40,7 +37,6 @@ def fetch_liked_songs(sp):
             track = i['track']
             track_name = track['name']
             artist_name = track['artists'][0]['name']
-            liked_tracks.append(f"{track_name} - {artist_name}")
-        
+            yield (track_name, artist_name)
+            ## liked_tracks.append(f"{track_name} - {artist_name}")
         offset += limit
-    return liked_tracks
