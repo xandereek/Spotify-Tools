@@ -18,7 +18,6 @@ def playlist_fetcher(sp, playlist_id):
             track_name = track['name']
             artist_name = track['artists'][0]['name']
             yield (track_name, artist_name)
-             ##playlist_tracks.append(f"{track_name} - {artist_name}")
         offset += limit
 
 def fetch_liked_songs(sp):
@@ -38,5 +37,4 @@ def fetch_liked_songs(sp):
             track_name = track['name']
             artist_name = track['artists'][0]['name']
             yield (track_name, artist_name)
-            ## liked_tracks.append(f"{track_name} - {artist_name}")
         offset += limit
