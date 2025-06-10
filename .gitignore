@@ -1,6 +1,7 @@
 __pycache__/
 .cache
-secrets_1.py
-*.txt
-*.csv
-*.json
+exports/*.txt
+exports/*.csv
+exports/*.json
+exports/*.json
+config_local.json

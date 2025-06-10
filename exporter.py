@@ -1,9 +1,15 @@
+import os
 import json
 import csv
 import logging
 
+export_dir = "exports"
+os.makedirs(export_dir, exist_ok=True)
+
+
 def export_to_txt(file_name, tracks):
-    with open(f"{file_name}.txt", "w", encoding="utf-8") as f:
+    path = os.path.join(export_dir, f"{file_name}.txt")
+    with open(path, "w", encoding="utf-8") as f:
         count = 0
         for song in tracks:
             f.write(f"{song[0]} - {song[1]}\n")
@@ -11,7 +17,8 @@ def export_to_txt(file_name, tracks):
     logging.info("Saved %d tracks to %s.txt", count, file_name)
 
 def export_to_json(file_name, tracks):
-    with open(f"{file_name}.json", "w", encoding="utf-8") as f:
+    path = os.path.join(export_dir, f"{file_name}.json")
+    with open(path, "w", encoding="utf-8") as f:
         
         track_list = [
             {"artist":artist_name, "track": track_name} for artist_name, track_name in tracks
@@ -21,7 +28,8 @@ def export_to_json(file_name, tracks):
     logging.info("Saved %d tracks to %s.json", len(track_list), file_name)
 
 def export_to_csv(file_name, tracks):
-    with open(f"{file_name}.csv", "w", newline="",  encoding="utf-8") as f:
+    path = os.path.join(export_dir, f"{file_name}.csv")
+    with open(path, "w", newline="",  encoding="utf-8") as f:
 
         writer = csv.writer(f)
         writer.writerow(["Track", "Artist"])
