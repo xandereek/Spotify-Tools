@@ -54,6 +54,7 @@ A Python script to export your Spotify playlists and liked songs to various form
 
 - [ ] Error handling (e.g., for network issues, API rate limits)
 - [ ] Usability improvements (e.g., clearer prompts, progress indicators)
+- [ ] Restoring playlists (e.g., recreate from our .txt or .csv backups)
 - [ ] Playlist analysis features (e.g., genre breakdown, pie chart of artists)
 
 ## Contributing
