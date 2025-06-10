@@ -48,5 +48,5 @@ def fetch_liked_songs(sp):
                 
                 yield (track_name, artist_name)
             offset += limit
-            pbar.len(items)
+            pbar.update(len(items))
     

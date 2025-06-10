@@ -1,4 +1,3 @@
-import spotipy
 import logging
 import auth
 import fetcher
