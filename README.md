@@ -22,14 +22,19 @@ A Python script to export your Spotify playlists and liked songs to various form
 4.  **Set up Spotify API Credentials:**
     *   Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/) and create an app.
     *   Note your `Client ID` and `Client Secret`.
-    *   In your app settings (on the Spotify Developer Dashboard), set a `Redirect URI`. A common one for local development is `http://localhost:8888/callback`.
-    *   Create a file named `secrets_1.py` in the same directory as the script and add your credentials like this:
+    *   In your app settings (on the Spotify Developer Dashboard), set a `Redirect URI`. For local development, you can use `http://127.0.0.1:8888/callback`.
+    *   Important: The Redirect URI set in your Spotify Developer App settings must be an exact match to the `redirect_uri` value in your `config.json` file.
+    *   Edit the existing `config.json` file (located in the project root) by replacing the placeholder values with your actual `Client ID`, `Client Secret`, and `Redirect URI`.
+    *   It should look like this:
 
-        ```python
-        CLIENT_ID = "YOUR_CLIENT_ID"
-        CLIENT_SECRET = "YOUR_CLIENT_SECRET"
-        REDIRECT_URI = "YOUR_REDIRECT_URI" # e.g., "http://localhost:8888/callback"
+        ```json
+        {
+          "client_id": "YOUR_CLIENT_ID",
+          "client_secret": "YOUR_CLIENT_SECRET",
+          "redirect_uri": "http://127.0.0.1:8888/callback"
+        }
         ```
+    *   Alternatively, you can create a `config_local.json` file in the project root with the same structure. If this file exists, it will be used instead of `config.json`. This is useful for local overrides and should be added to your `.gitignore` file if it contains sensitive information.
 
 ## Usage
 
