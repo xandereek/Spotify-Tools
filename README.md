@@ -63,4 +63,4 @@ Contributions are welcome! If you have suggestions for improvements or new featu
 
 ## License
 
-This project is currently unlicensed. Feel free to use it as you wish. (Consider adding an MIT License if distributing).
+This project is currently unlicensed. Feel free to use it as you wish.
