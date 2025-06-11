@@ -49,7 +49,7 @@ A Python script to export your Spotify playlists and liked songs to various form
     *   Choose whether to export from your playlists or your liked songs.
     *   If exporting from playlists, select the playlist you want to export.
     *   Choose the desired export format (TXT, JSON, or CSV).
-5.  The exported file will be saved in the `exports/` directory (which will be created if it doesn't exist), named after the playlist (e.g., `exports/My Awesome Playlist.txt`) or `exports/liked songs.txt` for liked songs.
+4.  The exported file will be saved in the `exports/` directory (which will be created if it doesn't exist), named after the playlist (e.g., `exports/My Awesome Playlist.txt`) or `exports/liked songs.txt` for liked songs.
 
 ## Planned Features
 
