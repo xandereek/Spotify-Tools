@@ -10,6 +10,7 @@ A Python script to export your Spotify playlists and liked songs to various form
     - TXT files
     - JSON files
     - CSV files
+- Displays progress bars during track fetching.
 
 ## Setup
 
@@ -19,7 +20,7 @@ A Python script to export your Spotify playlists and liked songs to various form
     ```bash
     pip install spotipy tqdm
     ```
-4.  **Set up Spotify API Credentials:**
+3.  **Set up Spotify API Credentials:**
     *   Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/) and create an app.
     *   Note your `Client ID` and `Client Secret`.
     *   In your app settings (on the Spotify Developer Dashboard), set a `Redirect URI`. For local development, you can use `http://127.0.0.1:8888/callback`.
@@ -48,7 +49,7 @@ A Python script to export your Spotify playlists and liked songs to various form
     *   Choose whether to export from your playlists or your liked songs.
     *   If exporting from playlists, select the playlist you want to export.
     *   Choose the desired export format (TXT, JSON, or CSV).
-5.  The exported file will be saved in the same directory as the script, named after the playlist (e.g., `My Awesome Playlist.txt`) or `liked songs.txt` for liked songs.
+5.  The exported file will be saved in the `exports/` directory (which will be created if it doesn't exist), named after the playlist (e.g., `exports/My Awesome Playlist.txt`) or `exports/liked songs.txt` for liked songs.
 
 ## Planned Features
 
@@ -63,4 +64,4 @@ Contributions are welcome! If you have suggestions for improvements or new featu
 
 ## License
 
-This project is currently unlicensed. Feel free to use it as you wish. (Consider adding an MIT License if distributing).
+This project is licensed under the MIT License. See the [LICENSE.md](LICENSE.md) file for details.
