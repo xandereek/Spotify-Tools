@@ -44,8 +44,8 @@ A Python script to export your Spotify playlists and liked songs to various form
     ```bash
     python main.py
     ```
-3.  The script will authenticate you with Spotify (this might open a browser window for you to log in and authorize).
-4.  Follow the on-screen prompts to:
+2.  The script will authenticate you with Spotify (this might open a browser window for you to log in and authorize).
+3.  Follow the on-screen prompts to:
     *   Choose whether to export from your playlists or your liked songs.
     *   If exporting from playlists, select the playlist you want to export.
     *   Choose the desired export format (TXT, JSON, or CSV).
