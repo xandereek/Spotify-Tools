@@ -6,7 +6,7 @@ import sys
 from spotipy.oauth2 import SpotifyOAuth
 
 
-def load_config(filepath="config.json"):
+def load_config():
     file_name = "config_local.json" if os.path.exists("config_local.json") else "config.json"
     try:
         with open(file_name, "r") as f:
