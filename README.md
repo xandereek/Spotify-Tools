@@ -2,6 +2,10 @@
 
 A Python script to export your Spotify playlists and liked songs to various formats (TXT, JSON, CSV).
 
+**Note**
+
+This project is under active development! Features are incomplete and things may change. Feedback, issues, and pull requests are very welcome.
+
 ## Features
 
 - Fetch tracks from your public and private playlists.
@@ -53,7 +57,8 @@ A Python script to export your Spotify playlists and liked songs to various form
 
 ## Planned Features
 
-- [ ] Error handling (e.g., for network issues, API rate limits)
+- [X] Error handling (e.g., for network issues, API rate limits)
+- [ ] Modularity improvements.
 - [ ] Usability improvements (e.g., clearer prompts, progress indicators)
 - [ ] Restoring playlists (e.g., recreate from our .txt or .csv backups)
 - [ ] Playlist analysis features (e.g., genre breakdown, pie chart of artists)

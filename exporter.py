@@ -46,7 +46,7 @@ def export_to_json(file_name, tracks):
     with open(path, "w", encoding="utf-8") as f:
         
         track_list = [
-            {"artist":artist_name, "track": track_name} for artist_name, track_name in tracks
+            {"track": track_name, "artist":artist_name} for track_name, artist_name in tracks
         ]
         json.dump(track_list, f, indent=2)
 

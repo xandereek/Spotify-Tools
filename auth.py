@@ -1,6 +1,8 @@
 import json
 import os
 import spotipy
+import logging
+import sys
 from spotipy.oauth2 import SpotifyOAuth
 
 def load_config(filepath="config.json"):
@@ -23,8 +25,16 @@ def load_config(filepath="config.json"):
 
     # Use config_local.json for local development overrides if it exists
     file_name = "config_local.json" if os.path.exists("config_local.json") else "config.json"
-    with open(file_name, "r") as f:
-        return json.load(f)
+    try:
+        with open(file_name, "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        logging.error(f"Config File '{file_name}' not found.")
+        sys.exit(1)
+    except json.JSONDecodeError:
+        logging.error(f"Could not decode '{file_name}'")
+        sys.exit(1)
+
 
 config = load_config()
 
