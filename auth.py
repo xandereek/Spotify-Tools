@@ -5,22 +5,23 @@ import logging
 import sys
 from spotipy.oauth2 import SpotifyOAuth
 
-def load_config(filepath="config.json"):
+def load_config():
 
-    """Loads the configuration file for the Spotify client.
+    """Loads the configuration from a file.
 
-    It first checks for a 'config_local.json' for local overrides,
-    falling back to the provided 'config.json' if it doesn't exist.
-    This allows for keeping sensitive credentials out of version control.
+    This function first checks for a 'config_local.json' file for local
+    overrides. If not found, it falls back to 'config.json'. This allows for
+    keeping sensitive credentials in a local file that is not checked into
+    version control.
 
-    Args:
-        filepath (str, optional): The default path to the configuration file.
-                                  Defaults to "config.json".
+    The program will exit if the configuration file is not found or if
+    it contains invalid JSON.
 
     Returns:
         dict: A dictionary containing the configuration data.
-              Returns an empty dictionary if the file cannot be found or
-              if there is a JSON decoding error.
+
+    Raises:
+        SystemExit: If the configuration file cannot be found or decoded.
     """
 
     # Use config_local.json for local development overrides if it exists
