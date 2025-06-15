@@ -12,6 +12,15 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
+
+def name_sanitizer(name):
+        banned = '\/:*?"<>|'
+        new_name = ""
+        for char in name:
+            if char not in banned:
+                new_name += char
+        return new_name
+
 try:
     sp = auth.get_spotify_client()
     logging.info("Successfully authenticated with Spotify.")
@@ -60,8 +69,8 @@ if playlist_or_liked == 1:
             print("Invalid Input. Please enter a number.")
 
     selected_playlist = results['items'][playlist_selection]
-    playlist_id = selected_playlist['id']
-    playlist_name = selected_playlist['name']
+    playlist_id = selected_playlist['id']  
+    playlist_name = name_sanitizer(selected_playlist['name'])
     
     logging.info("User selected playlist: %s (ID: %s)", playlist_name, playlist_id)
     print(f"You selected: {playlist_name}\n")
