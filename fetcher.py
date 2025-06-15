@@ -19,7 +19,6 @@ def playlist_fetcher(sp, playlist_id):
         tuple[str, str]: A tuple containing the track name and the primary artist's name.
     """
 
-    logging.info("Fetching playlist tracks..")
     logging.info("Fetching playlist data..")
 
     try:
