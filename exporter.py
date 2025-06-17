@@ -3,6 +3,14 @@ import json
 import csv
 import logging
 
+def name_sanitizer(name):
+        banned = '\/:*?"<>|'
+        new_name = ""
+        for char in name:
+            if char not in banned:
+                new_name += char
+        return new_name
+
 export_dir = "exports"
 os.makedirs(export_dir, exist_ok=True)
 

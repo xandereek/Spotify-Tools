@@ -6,6 +6,7 @@ import fetcher
 import exporter
 import sys
 from spotipy import SpotifyException
+from exporter import name_sanitizer
 
 
 logging.basicConfig(
@@ -13,13 +14,6 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-def name_sanitizer(name):
-        banned = '\/:*?"<>|'
-        new_name = ""
-        for char in name:
-            if char not in banned:
-                new_name += char
-        return new_name
 
 try:
     sp = auth.get_spotify_client()
