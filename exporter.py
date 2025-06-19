@@ -3,17 +3,16 @@ import json
 import csv
 import logging
 
-def name_sanitizer(name):
-        banned = '\/:*?"<>|'
-        new_name = ""
-        for char in name:
-            if char not in banned:
-                new_name += char
-        return new_name
 
 export_dir = "exports"
 os.makedirs(export_dir, exist_ok=True)
 
+def export_format():
+    while True:
+            export_format = input("Export format? TXT(1), JSON(2), CSV(3): ")
+            if export_format in ["1", "2", "3"]:
+                return export_format
+            print("Invalid input. Please enter 1, 2, or 3.")
 
 def export_to_txt(file_name, tracks):
 
