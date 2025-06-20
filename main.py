@@ -22,24 +22,24 @@ except (SpotifyException, requests.exceptions.RequestException) as e:
     logging.error("Failed to authenticate with Spotify: %s", e)
     sys.exit(1)
 
-max_retries = 3
-attempt = 0
-
-while attempt < max_retries:
-    try:
-        results = sp.current_user_playlists()
-        break
-    except (SpotifyException, requests.exceptions.RequestException) as e:
-        attempt += 1
-        if attempt == max_retries:
-            logging.error("Failed to receive playlists.")
-            sys.exit(1)
-        time.sleep(1)
-
 playlist_or_liked = validation.select_playlist_source()
-        
+
 
 if playlist_or_liked == 1:
+    max_retries = 3
+    attempt = 0
+    while attempt < max_retries:
+
+        try:
+            results = sp.current_user_playlists()
+            break
+        except (SpotifyException, requests.exceptions.RequestException) as e:
+            attempt += 1
+            if attempt == max_retries:
+                logging.error("Failed to receive playlists.")
+                sys.exit(1)
+            time.sleep(1)
+
     print("\nPlaylists:")
     for index, playlist in enumerate(results['items']):
         print(f"{index+1}: {playlist['name']}")
