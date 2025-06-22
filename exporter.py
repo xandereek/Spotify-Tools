@@ -9,10 +9,10 @@ os.makedirs(export_dir, exist_ok=True)
 
 def export_format():
     while True:
-            export_format = input("Export format? TXT(1), JSON(2), CSV(3): ")
-            if export_format in ["1", "2", "3"]:
+            export_format = input("Export format? TXT(1), JSON(2), CSV(3), MARKDOWN(4): ")
+            if export_format in ["1", "2", "3", "4"]:
                 return export_format
-            print("Invalid input. Please enter 1, 2, or 3.")
+            print("Invalid input. Please enter 1, 2, 3, or 4.")
 
 def export_to_txt(file_name, tracks):
 
@@ -88,4 +88,19 @@ def export_to_csv(file_name, tracks):
         writer.writerows(tracks)
 
         logging.info("Saved tracks to %s.csv", file_name)
+
+def export_to_markdown(file_name, tracks):
+    count = 0
+    path = os.path.join(export_dir, f"{file_name}.md")
+    with open(path, "w", encoding="utf-8") as f:
+        count = 0
+
+        f.write(f"# Playlist: {file_name}\n\n")
+        f.write("| Track Name | Artist |\n")
+        f.write("|------------|--------|\n")
+        
+        for track_name, artist_name in tracks:
+            f.write(f"| {track_name} | {artist_name} |\n")
+            count += 1
+        logging.info("Saved %d tracks to %s.md", count, file_name)
 

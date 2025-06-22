@@ -3,5 +3,5 @@ __pycache__/
 exports/*.txt
 exports/*.csv
 exports/*.json
-exports/*.json
+exports/*.md
 config_local.json

@@ -67,7 +67,8 @@ if playlist_or_liked == 1:
     exporters = {
         "1":exporter.export_to_txt,
         "2":exporter.export_to_json,
-        "3":exporter.export_to_csv
+        "3":exporter.export_to_csv,
+        "4":exporter.export_to_markdown
     }
     exporters[export_format](playlist_name, playlist_tracks)
 
@@ -82,6 +83,7 @@ elif playlist_or_liked == 2:
     exporters = {
         "1":exporter.export_to_txt,
         "2":exporter.export_to_json,
-        "3":exporter.export_to_csv
+        "3":exporter.export_to_csv,
+        "4":exporter.export_to_markdown
     }
     exporters[export_format](playlist_name, liked_tracks)
