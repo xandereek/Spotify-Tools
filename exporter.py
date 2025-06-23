@@ -95,10 +95,14 @@ def export_to_markdown(file_name, tracks):
     with open(path, "w", encoding="utf-8") as f:
         count = 0
 
+        # These lines write the specific text required to create a Markdown table.
+        # '#' is a main header, and the '|' and '---' characters define the table structure.
         f.write(f"# Playlist: {file_name}\n\n")
         f.write("| Track Name | Artist |\n")
         f.write("|------------|--------|\n")
         
+        # This for-loop unpacks each tuple from the 'tracks' generator
+        # into two separate variables, 'track_name' and 'artist_name', for each iteration.
         for track_name, artist_name in tracks:
             f.write(f"| {track_name} | {artist_name} |\n")
             count += 1
