@@ -24,6 +24,13 @@ except (SpotifyException, requests.exceptions.RequestException) as e:
 
 playlist_or_liked = validation.select_playlist_source()
 
+exporters = {
+        "1":exporter.export_to_txt,
+        "2":exporter.export_to_json,
+        "3":exporter.export_to_csv,
+        "4":exporter.export_to_markdown
+    }
+
 
 if playlist_or_liked == 1:
     max_retries = 3
@@ -64,12 +71,7 @@ if playlist_or_liked == 1:
 
     export_format = exporter.export_format()
     
-    exporters = {
-        "1":exporter.export_to_txt,
-        "2":exporter.export_to_json,
-        "3":exporter.export_to_csv,
-        "4":exporter.export_to_markdown
-    }
+    
     exporters[export_format](playlist_name, playlist_tracks)
 
 elif playlist_or_liked == 2:
@@ -80,10 +82,5 @@ elif playlist_or_liked == 2:
 
     liked_tracks = fetcher.fetch_liked_songs(sp)
 
-    exporters = {
-        "1":exporter.export_to_txt,
-        "2":exporter.export_to_json,
-        "3":exporter.export_to_csv,
-        "4":exporter.export_to_markdown
-    }
+    
     exporters[export_format](playlist_name, liked_tracks)
