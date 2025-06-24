@@ -93,6 +93,16 @@ def export_to_markdown(file_name, tracks):
     count = 0
     path = os.path.join(export_dir, f"{file_name}.md")
     with open(path, "w", encoding="utf-8") as f:
+        """Exports a list of tracks to a Markdown-formatted table.
+
+        The Markdown file includes a header and a table with two columns: "Track Name" and "Artist".
+
+        Args:
+            file_name (str): The base name for the output file (without extension).
+            tracks (iterable[tuple[str, str]]): An iterable of tuples, where each
+                                                tuple contains a track name and an
+                                                artist name.
+        """
         count = 0
 
         # These lines write the specific text required to create a Markdown table.
