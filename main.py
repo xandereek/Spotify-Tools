@@ -7,7 +7,7 @@ import exporter
 import sys
 import validation
 from spotipy import SpotifyException
-
+from typing import Dict, Any, Optional
 
 logging.basicConfig(
     level=logging.INFO,
@@ -36,9 +36,9 @@ if playlist_or_liked == 1:
     max_retries = 3
     attempt = 0
     while attempt < max_retries:
-
+        
         try:
-            results = sp.current_user_playlists()
+            results: Optional[Dict[str, Any]] = sp.current_user_playlists()
             break
         except (SpotifyException, requests.exceptions.RequestException) as e:
             attempt += 1
@@ -46,6 +46,10 @@ if playlist_or_liked == 1:
                 logging.error("Failed to receive playlists.")
                 sys.exit(1)
             time.sleep(1)
+
+    if results is None:
+        logging.error("Failed to receive playlists.")
+        sys.exit(1)
 
     print("\nPlaylists:")
     for index, playlist in enumerate(results['items']):
