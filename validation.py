@@ -1,7 +1,7 @@
 
 
 def name_sanitizer(name):
-        banned = '\/:*?"<>|'
+        banned = r'\/:*?"<>|'
         new_name = ""
         for char in name:
             if char not in banned:
