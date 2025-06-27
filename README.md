@@ -58,8 +58,8 @@ This project is under active development! Features are incomplete and things may
 ## Planned Features
 
 - [X] Error handling (e.g., for network issues, API rate limits)
-- [ ] Modularity improvements.
-- [ ] Usability improvements (e.g., clearer prompts, progress indicators)
+- [X] Modularity improvements.
+- [X] Usability improvements (e.g., clearer prompts, progress indicators)
 - [ ] Restoring playlists (e.g., recreate from our .txt or .csv backups)
 - [ ] Playlist analysis features (e.g., genre breakdown, pie chart of artists)
 
