@@ -55,6 +55,8 @@ This project is under active development! Features are incomplete and things may
     *   Choose the desired export format (TXT, JSON, or CSV).
 4.  The exported file will be saved in the `exports/` directory (which will be created if it doesn't exist), named after the playlist (e.g., `exports/My Awesome Playlist.txt`) or `exports/liked songs.txt` for liked songs.
 
+**Note:** Playlist names containing Windows-invalid characters (`\ / : * ? " < > |`) will have those characters removed from the exported file name.
+
 ## Planned Features
 
 - [X] Error handling (e.g., for network issues, API rate limits)
