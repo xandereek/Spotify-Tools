@@ -22,7 +22,7 @@ This project is under active development! Features are incomplete and things may
 2.  **Install dependencies:**
 
     ```bash
-    pip install spotipy tqdm
+    pip install -r requirements.txt
     ```
 3.  **Set up Spotify API Credentials:**
     *   Go to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/) and create an app.
