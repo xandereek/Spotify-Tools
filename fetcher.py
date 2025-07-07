@@ -4,6 +4,22 @@ import time
 from tqdm import tqdm
 from spotipy import SpotifyException
 
+
+
+def retry_api_call(func) -> dict: # type: ignore
+    max_retries = 3
+
+    for attempt in range(max_retries):
+        try:
+            return func()
+        except (SpotifyException, requests.exceptions.RequestException) as e:  
+                    logging.warning(f"Error getting tracks Attempt{attempt}: {e}")
+                    if attempt  == max_retries - 1:
+                        logging.error("Failed getting tracks")
+                        raise e
+                    logging.warning(f"Error getting tracks Attempt {attempt + 1}: {e}")
+                    time.sleep(1)
+
 def playlist_fetcher(sp, playlist_id):
 
     """Fetches all tracks from a Spotify playlist and yields them one by one.
@@ -20,39 +36,27 @@ def playlist_fetcher(sp, playlist_id):
     """
 
     logging.info("Fetching playlist data..")
-
     try:
-        response = sp.playlist_tracks(playlist_id, limit=1)
-        total = response.get('total', 0)
+            response = sp.playlist_tracks(playlist_id, limit=1)
+            total = response.get('total', 0)
     except (SpotifyException, requests.exceptions.RequestException) as e:
-        logging.error(f"Error fetching playlist data: {e}")
-        return
+            logging.error(f"Error fetching playlist data: {e}")
+            return
     except Exception as e:
-        logging.error(f"Unexpected error: {e}")
-        return
-
-
+            logging.error(f"Unexpected error: {e}")
+            return
 
     limit = 100
     offset = 0
 
     with tqdm(total=total, desc="Fetching Playlist", unit="track") as pbar:
         while True:
-            max_retries = 3
-            attempt = 0
-            items = None
-            while attempt < max_retries:
-                try:
-                    response = sp.playlist_tracks(playlist_id, limit=limit, offset=offset)
-                    items = response['items']
-                    break
-                except (SpotifyException, requests.exceptions.RequestException) as e:
-                    attempt += 1
-                    logging.warning(f"Error getting tracks Attempt{attempt}: {e}")
-                    if attempt == max_retries:
-                        logging.error("Failed getting tracks")
-                        break
-                    time.sleep(1)
+            try:
+                response = retry_api_call(lambda: sp.playlist_tracks(playlist_id, limit=limit, offset=offset))
+                items = response['items']
+            except (SpotifyException, requests.exceptions.RequestException) as e:
+                logging.error("Failed getting tracks after retries")
+                break 
 
             if not items:
                 break
@@ -87,27 +91,28 @@ def fetch_liked_songs(sp):
     """
     
     logging.info("Fetching liked songs..")
-    response = sp.current_user_saved_tracks(limit=1)
-    total = response.get('total', 0)
+    
+    try:
+        response = sp.current_user_saved_tracks(limit=1)
+        total = response.get('total', 0)
+    except (SpotifyException, requests.exceptions.RequestException) as e:
+        logging.error(f"Error fetching liked songs data: {e}")
+        return
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
+        return
 
     limit = 50
     offset = 0
+    
     with tqdm(total=total, desc="Fetching liked songs", unit="track") as pbar:
         while True:
-            max_retries = 3
-            attempt = 0
-            items = None
-            while attempt < max_retries:
-                try:
-                    response = sp.current_user_saved_tracks(limit=limit, offset=offset)
-                    items = response['items']
-                    break
-                except (SpotifyException, requests.exceptions.RequestException) as e:
-                    attempt += 1
-                    logging.warning(f"Error getting tracks Attempt{attempt}: {e}")
-                    if attempt == max_retries:
-                        break
-                    time.sleep(1)
+            try:
+                response = retry_api_call(lambda: sp.current_user_saved_tracks(limit=limit, offset=offset))
+                items = response['items']
+            except (SpotifyException, requests.exceptions.RequestException) as e:
+                logging.error("Failed getting liked songs after retries")
+                break
 
             if not items:
                 break
