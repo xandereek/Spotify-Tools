@@ -20,6 +20,20 @@ def retry_api_call(func) -> dict: # type: ignore
                     logging.warning(f"Error getting tracks Attempt {attempt + 1}: {e}")
                     time.sleep(1)
 
+def loop_tracks(items):
+     for i in items:
+                track = i.get('track')
+                if track:
+                    track_name = track.get('name', 'Unknown Track')
+                    artists = track.get('artists')
+                    if artists:
+                        artist_name = artists[0].get('name', 'Unknown Artist')
+                    else:
+                        artist_name = 'Unknown Artist'
+
+                    yield (track_name, artist_name)
+
+
 def playlist_fetcher(sp, playlist_id):
 
     """Fetches all tracks from a Spotify playlist and yields them one by one.
@@ -61,18 +75,8 @@ def playlist_fetcher(sp, playlist_id):
             if not items:
                 break
 
-            for i in items:
-                track = i.get('track')
-                if track:
-                    track_name = track.get('name', 'Unknown Track')
-                    artists = track.get('artists')
-                    if artists:
-                        artist_name = artists[0].get('name', 'Unknown Artist')
-                    else:
-                        artist_name = 'Unknown Artist'
-
-                    yield (track_name, artist_name)
-                
+            yield from loop_tracks(items)
+            
             offset += limit
             pbar.update(len(items))
 
@@ -117,17 +121,7 @@ def fetch_liked_songs(sp):
             if not items:
                 break
 
-            for i in items:
-                track = i.get('track')
-                if track:
-                    track_name = track.get('name', 'Unknown Track')
-                    artists = track.get('artists')
-                    if artists:
-                        artist_name = artists[0].get('name', 'Unknown Artist')
-                    else:
-                        artist_name = 'Unknown Artist'
-
-                    yield (track_name, artist_name)
+            yield from loop_tracks(items)
                 
             offset += limit
             pbar.update(len(items))
