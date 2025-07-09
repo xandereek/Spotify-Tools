@@ -15,12 +15,18 @@ logging.basicConfig(
 )
 
 def main():
-    try:
-        sp = auth.get_spotify_client()
-        logging.info("Successfully authenticated with Spotify.")
-    except (SpotifyException, requests.exceptions.RequestException) as e:
-        logging.error("Failed to authenticate with Spotify: %s", e)
-        sys.exit(1)
+    max_retries = 3
+    for retries in range(max_retries):
+        try:
+            sp = auth.get_spotify_client()
+            logging.info("Successfully authenticated with Spotify.")
+            break
+        except (SpotifyException, requests.exceptions.RequestException) as e:
+            logging.warning(f"Erorr authenticating with spotify. Attempt:{retries + 1}")
+            if retries == max_retries - 1:
+                logging.error("Failed to authenticate with Spotify: %s", e)
+                sys.exit()
+            time.sleep(1)
 
     playlist_or_liked = validation.select_playlist_source()
 
@@ -33,7 +39,6 @@ def main():
 
 
     if playlist_or_liked == 1:
-        max_retries = 3
         attempt = 0
         while attempt < max_retries:
             
