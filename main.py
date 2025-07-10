@@ -24,7 +24,7 @@ def main():
         except (SpotifyException, requests.exceptions.RequestException) as e:
             logging.warning(f"Erorr authenticating with spotify. Attempt:{retries + 1}")
             if retries == max_retries - 1:
-                logging.error("Failed to authenticate with Spotify: %s", e)
+                logging.error(f"Failed to authenticate with spotify:{e}")
                 sys.exit()
             time.sleep(1)
 
@@ -36,7 +36,6 @@ def main():
             "3":exporter.export_to_csv,
             "4":exporter.export_to_markdown
         }
-
 
     if playlist_or_liked == 1:
         attempt = 0
@@ -80,7 +79,6 @@ def main():
 
         export_format = exporter.export_format()
         
-        
         exporters[export_format](playlist_name, playlist_tracks)
 
     elif playlist_or_liked == 2:
@@ -91,7 +89,6 @@ def main():
 
         liked_tracks = fetcher.fetch_liked_songs(sp)
 
-        
         exporters[export_format](playlist_name, liked_tracks)
 
 if __name__ == '__main__':
