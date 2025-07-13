@@ -8,6 +8,7 @@ import sys
 import validation
 from spotipy import SpotifyException
 from typing import Dict, Any, Optional
+from constants import SourceOption
 
 logging.basicConfig(
     level=logging.INFO,
@@ -37,7 +38,7 @@ def main():
             "4":exporter.export_to_markdown
         }
 
-    if playlist_or_liked == 1:
+    if playlist_or_liked == SourceOption.PLAYLIST.value:
         attempt = 0
         while attempt < max_retries:
             
@@ -81,7 +82,7 @@ def main():
         
         exporters[export_format](playlist_name, playlist_tracks)
 
-    elif playlist_or_liked == 2:
+    elif playlist_or_liked == SourceOption.LIKED_SONGS.value:
         logging.info("User selected to export Liked Songs.")
         playlist_name = "liked songs"
 
