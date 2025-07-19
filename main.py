@@ -41,7 +41,6 @@ def main():
     if playlist_or_liked == SourceOption.PLAYLIST.value:
         attempt = 0
         while attempt < max_retries:
-            
             try:
                 results: Optional[Dict[str, Any]] = sp.current_user_playlists()
                 break
@@ -87,9 +86,8 @@ def main():
         playlist_name = "liked songs"
 
         export_format = exporter.export_format()
-
         liked_tracks = fetcher.fetch_liked_songs(sp)
-
+        
         exporters[export_format](playlist_name, liked_tracks)
 
 if __name__ == '__main__':
