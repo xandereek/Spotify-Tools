@@ -41,6 +41,10 @@ int main(int argc, char* argv[]) {
         }
         std::string artist_name = track["artist"].get<std::string>();
 
+        if (artist_name.empty()) {
+            continue;
+        }
+
         artist_counts[artist_name] ++;
     }
     std::vector<std::pair<std::string, int>> sorted_artists(artist_counts.begin(), artist_counts.end());
