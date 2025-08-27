@@ -6,3 +6,4 @@ exports/*.csv
 exports/*.json
 exports/*.md
 config_local.json
+*.exe
