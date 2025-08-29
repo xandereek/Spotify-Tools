@@ -84,28 +84,24 @@ def main():
             logging.error("Failed to receive playlists or no playlists found.")
             sys.exit(1)
 
+        available_playlists = results['items']
+
         print("\nPlaylists:")
         for index, playlist in enumerate(results['items']):
             print(f"{index+1}: {playlist['name']}")
         
-        playlist_selection = -1
-        while True:
-            try:
-                playlist_selection = int(input("\nSelect a playlist by number: ")) - 1
-                if 0 <= playlist_selection < len(results['items']):
-                    break
-                else:
-                    print(f"Please enter a number between 1 and {len(results['items'])}")
-            except ValueError:
-                print("Invalid Input. Please enter a number.")
+        selected_playlists = validation.select_playlists(available_playlists)
 
-        selected_playlist = results['items'][playlist_selection]
-        playlist_id = selected_playlist['id']  
-        playlist_name = validation.name_sanitizer(selected_playlist['name'])
-        
-        logging.info("User selected playlist: %s (ID: %s)", playlist_name, playlist_id)
-        print(f"You selected: {playlist_name}\n")
-        tracks_generator = fetcher.playlist_fetcher(sp, playlist_id)
+        if len(selected_playlists) == 1:
+            playlist = selected_playlists[0]
+            playlist_name = validation.name_sanitizer(playlist['name'])
+            tracks_generator = fetcher.playlist_fetcher(sp, playlist['id'])
+            print(f"You selected: {playlist['name']}\n")
+        else:
+            print(f"\nCombining {len(selected_playlists)} playlists.")
+            playlist_name_input = input("Please enter a name for the combined export file: ")
+            playlist_name = validation.name_sanitizer(playlist_name_input)
+            tracks_generator = exporter.combine_playlist_tracks(sp,  selected_playlists)
 
     elif playlist_or_liked == SourceOption.LIKED_SONGS.value:
         logging.info("User selected to export Liked Songs.")

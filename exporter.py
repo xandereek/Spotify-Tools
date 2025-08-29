@@ -2,7 +2,7 @@ import os
 import json
 import csv
 import logging
-
+import fetcher
 
 export_dir = "exports"
 os.makedirs(export_dir, exist_ok=True)
@@ -13,6 +13,14 @@ def export_format():
             if export_format in ["1", "2", "3", "4"]:
                 return export_format
             print("Invalid input. Please enter 1, 2, 3, or 4.")
+
+
+def combine_playlist_tracks(sp, playlists_to_fetch:list):
+    for playlist in playlists_to_fetch:
+        playlist_id = playlist['id']
+        playlist_name = playlist['name']
+        print(f"\nFetching tracks from: {playlist_name}...")
+        yield from fetcher.playlist_fetcher(sp, playlist_id)
 
 def export_to_txt(file_name, tracks):
 
