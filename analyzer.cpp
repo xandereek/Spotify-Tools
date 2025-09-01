@@ -11,6 +11,7 @@ using json = nlohmann::json;
 
 int main(int argc, char* argv[]) {
     std::unordered_map<std::string, int> artist_counts;
+    std::unordered_map<std::string, std::vector<std::string>> artist_to_tracks;
 
     if (argc != 2) {
         std::cerr << "Usage: " << argv[0] << " <filename.json>" << std::endl;
@@ -35,17 +36,22 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
+    int skipped_tracks_count = 0;
+
     for (const auto& track : jsonData) {
         if (!track.contains("artist") || track["artist"].is_null()) {
             continue;
         }
         std::string artist_name = track["artist"].get<std::string>();
+        std::string track_name = track["track"].get<std::string>();
 
         if (artist_name.empty()) {
+            skipped_tracks_count++;
             continue;
         }
 
         artist_counts[artist_name] ++;
+        artist_to_tracks[artist_name].push_back(track_name);
     }
     std::vector<std::pair<std::string, int>> sorted_artists(artist_counts.begin(), artist_counts.end());
 
@@ -60,4 +66,29 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < limit; i++) {
         std::cout << i + 1 << ". " << sorted_artists[i].first << "(" << sorted_artists[i].second << " songs)" << std::endl;
     }
+
+    if (skipped_tracks_count > 0) {
+        std::cout << "\nNote: Skipped " << skipped_tracks_count << " tracks due to missing artist data." << std::endl;
+    }
+
+    std::string user_input;
+    while(true) {
+        std::cout << "\n> Enter an artist to see their tracks (or type 'quit' to exit): " << std::endl;
+        std::cout.flush();
+        std::getline(std::cin, user_input);
+
+        if (user_input == "quit") {
+            break;
+        }
+
+        if (artist_to_tracks.count(user_input)) {
+            std::cout << "Tracks by " << user_input << ": " << std::endl;
+            
+            for (const auto& tracks_title: artist_to_tracks.at(user_input)) {
+                std::cout << "- " << tracks_title << std::endl;
+            }
+        }
+    }
+
+    return 0;
 }
