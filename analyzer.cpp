@@ -73,22 +73,30 @@ int main(int argc, char* argv[]) {
 
     std::string user_input;
     while(true) {
-        std::cout << "\n> Enter an artist to see their tracks (or type 'quit' to exit): " << std::endl;
+        std::cout << "\n> Enter a number (1-10) to see an artist's tracks (or type 'quit' to exit): " << std::endl;
         std::cout.flush();
         std::getline(std::cin, user_input);
 
         if (user_input == "quit") {
             break;
         }
+        int choice = 0;
+        try {
+            choice = std::stoi(user_input);
+        } catch (const std::invalid_argument& e){
+            std::cout << "Invalid input. Please enter a number or 'quit'." << std::endl;
+        }
 
-        if (artist_to_tracks.count(user_input)) {
-            std::cout << "Tracks by " << user_input << ": " << std::endl;
-            
-            for (const auto& tracks_title: artist_to_tracks.at(user_input)) {
-                std::cout << "- " << tracks_title << std::endl;
+        if (choice >= 1 && choice <= 10) {
+            std::string chosen_artist = sorted_artists[choice - 1].first;
+            std::cout << "\n Tracks by " << chosen_artist << ":" <<std::endl;
+
+            for (const auto& track_title: artist_to_tracks.at(chosen_artist)) {
+                std::cout << "- " << track_title << std::endl;
             }
+        } else {
+            std::cout << "Invalid number. Please enter a number between 1 and 10." << std::endl;
         }
     }
-
     return 0;
 }
