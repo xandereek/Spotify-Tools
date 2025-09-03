@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
             std::cout << "Invalid input. Please enter a number or 'quit'." << std::endl;
         }
 
-        if (choice >= 1 && choice <= 10) {
+        if (choice >= 1 && choice <= limit) {
             std::string chosen_artist = sorted_artists[choice - 1].first;
             std::cout << "\n Tracks by " << chosen_artist << ":" <<std::endl;
 
@@ -95,7 +95,7 @@ int main(int argc, char* argv[]) {
                 std::cout << "- " << track_title << std::endl;
             }
         } else {
-            std::cout << "Invalid number. Please enter a number between 1 and 10." << std::endl;
+            std::cout << "Invalid number. Please enter a number between 1 and " << limit << "." << std::endl;
         }
     }
     return 0;
