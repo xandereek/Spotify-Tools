@@ -85,6 +85,7 @@ int main(int argc, char* argv[]) {
             choice = std::stoi(user_input);
         } catch (const std::invalid_argument& e){
             std::cout << "Invalid input. Please enter a number or 'quit'." << std::endl;
+            continue;
         }
 
         if (choice >= 1 && choice <= limit) {
