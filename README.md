@@ -4,7 +4,7 @@ A Python script to export your Spotify playlists and liked songs to various form
 
 **Note**
 
-This project is under active development! Features are incomplete and things may change. Feedback, issues, and pull requests are very welcome.
+This project is maintained as time allows. Additional features may be added down the road.
 
 ---
 
@@ -19,6 +19,16 @@ This project is under active development! Features are incomplete and things may
     - CSV files
     - Markdown files
 - Displays progress bars during track fetching.
+- Error handling (e.g., for network issues, API rate limits)
+- Modular code structure for better maintainability
+- User-friendly interface with clear prompts and progress indicators
+- Restoring playlists (e.g., recreate from .txt or .csv backups) - *may be added in the future*
+
+---
+
+## Potential Future features    
+
+- Restoring playlists (e.g., recreate from .txt or .csv backups)
 
 ---
 
@@ -75,17 +85,6 @@ This will create a new executable from the source code that you can run on your 
 4.  The analysis (if requested) will be displayed in the terminal, and the exported file will be saved in the `exports/` directory.
 
 **Note:** Playlist names containing Windows invalid characters (`\ / : * ? " < > |`) will have those characters removed from the exported file name.
-
----
-
-## Planned Features
-
-- [X] Error handling (e.g., for network issues, API rate limits)
-- [X] Modularity improvements.
-- [X] Usability improvements (e.g., clearer prompts, progress indicators)
-- [X] Playlist analysis features (e.g., top 10 artists)
-- [ ] Restoring playlists (e.g., recreate from .txt or .csv backups)
-- [ ] More in-depth analysis (e.g., genre breakdown, pie chart of artists)
 
 ---
 
