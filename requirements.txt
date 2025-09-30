@@ -1,4 +1,4 @@
 spotipy
 requests
 tqdm
-pytest
+python-slugify

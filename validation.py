@@ -1,10 +1,16 @@
+from slugify import slugify
+
 def name_sanitizer(name):
         banned = r'\/:*?"<>|'
         new_name = ""
         for char in name:
             if char not in banned:
                 new_name += char
-        return new_name
+
+        if not new_name.strip():
+            return "playlist"
+        
+        return slugify(new_name.strip())
 
 def select_playlist_source():
     while True:

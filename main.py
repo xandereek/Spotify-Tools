@@ -43,14 +43,14 @@ def run_cpp_analyzer(playlist_name: str):
         print(f"Error: Analysis requires {file_to_analyze}, but it was not found.")
         return
 
-    command = [f"./{executable_name}", file_to_analyze]
+    command = [executable_name, file_to_analyze]
 
     try:
         proc = subprocess.Popen(
             command,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
             text=True,
             encoding='utf-8',
             errors='replace',
