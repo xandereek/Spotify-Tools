@@ -60,13 +60,15 @@ This project is maintained as time allows. Additional features may be added down
 
 ## A Note on the Analyzer
 
-For convenience, this project includes a pre-compiled C++ analyzer for Windows (`analyzer.exe`). However, if you are on a different operating system (macOS, Linux) or feel safer compiling the code yourself, you can do so easily.
+For convenience, this project includes a pre-compiled C++ analyzer for Windows (`analyzer.dll`). However, if you are on a different operating system (macOS, Linux) or feel safer compiling the code yourself, you can do so easily.
+
+**Note:** This project was built using `g++` therefore i cannot guarantee compatibility with other compilers.
 
 You will need a C++ compiler like `g++`. To compile, navigate to the project directory in your terminal and run:
 ```bash
-g++ analyzer.cpp -o analyzer
+g++ -shared -o analyzer.cpp analyzer.cpp
 ```
-This will create a new executable from the source code that you can run on your system.
+This will create a new dll from the source code that you can run on your system.
 
 ---
 
