@@ -48,7 +48,7 @@ extern "C" {
 
         int limit = std::min(10, (int)sorted_artists.size());
         for (int i = 0; i < limit; ++i) {
-            std::cout << i + 1 << ". " << sorted_artists[i].first << " - " << sorted_artists[i].second << "songs" << "\n";
+            std::cout << i + 1 << ". " << sorted_artists[i].first << " - " << sorted_artists[i].second << " songs" << "\n";
         }
     }
 }
