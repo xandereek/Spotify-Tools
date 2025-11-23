@@ -12,7 +12,7 @@ This project is maintained as time allows. Additional features may be added down
 
 - Fetch tracks from your public and private playlists.
 - Fetch your liked songs.
-- **New!** Analyze any playlist to find your top 10 most frequent artists.
+- Analyze any playlist to find your top 10 most frequent artists.
 - Export track data (track name, artist name) to:
     - TXT files
     - JSON files
@@ -23,12 +23,6 @@ This project is maintained as time allows. Additional features may be added down
 - Modular code structure for better maintainability
 - User-friendly interface with clear prompts and progress indicators
 - Restoring playlists (e.g., recreate from .txt or .csv backups) - *may be added in the future*
-
----
-
-## Potential Future features    
-
-- Restoring playlists (e.g., recreate from .txt or .csv backups)
 
 ---
 
@@ -60,13 +54,15 @@ This project is maintained as time allows. Additional features may be added down
 
 ## A Note on the Analyzer
 
-For convenience, this project includes a pre-compiled C++ analyzer for Windows (`analyzer.dll`). However, if you are on a different operating system (macOS, Linux) or feel safer compiling the code yourself, you can do so easily.
+For convenience, this project includes a pre-compiled C++ analyzer for Windows (`analyzer.dll`). If you prefer to compile the code yourself, you can do so easily.
 
-**Note:** This project was built using `g++` therefore i cannot guarantee compatibility with other compilers.
+**Note:** This project was built and tested on Windows using `g++`. Compatibility with other operating systems or compilers is not guaranteed.
+
+### Compiling the Analyzer (Windows)
 
 You will need a C++ compiler like `g++`. To compile, navigate to the project directory in your terminal and run:
 ```bash
-g++ -shared -o analyzer.cpp analyzer.cpp
+g++ -shared -o analyzer.dll analyzer.cpp
 ```
 This will create a new dll from the source code that you can run on your system.
 
