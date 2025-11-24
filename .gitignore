@@ -7,3 +7,4 @@ exports/*.json
 exports/*.md
 config_local.json
 *.dll
+logs/
