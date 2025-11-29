@@ -31,8 +31,14 @@ This project is maintained as time allows. Additional features may be added down
 1.  **Clone the repository (or download the files).**
 
 2.  **Install dependencies:**
+    Make sure you are in the project folder, then run: 
     ```bash
     pip install -r requirements.txt
+    ```
+    # Note for macOS users:
+    If the above command doesn't work, run:
+    ```bash
+    python3 -m pip install -r requirements.txt
     ```
 
 3.  **Set up Spotify API Credentials:**
@@ -65,6 +71,16 @@ You will need a C++ compiler like `g++`. To compile, navigate to the project dir
 g++ -shared -o analyzer.dll analyzer.cpp
 ```
 This will create a new dll from the source code that you can run on your system.
+
+---
+
+### Compiling the Analyzer (macOS)
+
+You will need the `clang` compiler (included with Xcode Command Line Tools). To compile, navigate to the project directory in your terminal and run:
+
+```bash
+clang++ -dynamiclib -o analyzer.dylib analyzer.cpp -std=c++11
+```
 
 ---
 

@@ -8,3 +8,5 @@ exports/*.md
 config_local.json
 *.dll
 logs/
+.venv
+*.dylib

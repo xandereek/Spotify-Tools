@@ -14,7 +14,7 @@ from constants import SourceOption
 
 os.makedirs("logs", exist_ok=True)
 
-file_handler = logging.FileHandler('logs/spotify-tools.log')
+file_handler = logging.FileHandler('logs/spotify-tools.log', mode='w')
 file_handler.setLevel(logging.INFO)
 
 console_handler = logging.StreamHandler()
@@ -29,13 +29,21 @@ logging.basicConfig(
     handlers=[file_handler, console_handler]
 )
 
-library_path = os.path.join(os.getcwd(), "analyzer.dll")
+logging.info(f"System platform: {sys.platform}")
+
+if sys.platform == "win32":
+    library_name = "analyzer.dll"
+elif sys.platform == "darwin":
+    library_name = "analyzer.dylib"
+else:
+    library_name = "analyzer.so"
+library_path = os.path.join(os.getcwd(), library_name)
 library = ctypes.CDLL(library_path)
 
 library.display_top_10_artists.argtypes = [ctypes.c_char_p]
 library.display_top_10_artists.restype = None
 
-logging.info("Successfully loaded DLL.")
+logging.info("Successfully loaded shared library.")
 
 def cpp_integration(filename):
     json_filename = os.path.join("exports", f"{filename}.json")
