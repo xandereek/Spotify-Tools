@@ -22,7 +22,6 @@ This project is maintained as time allows. Additional features may be added down
 - Error handling (e.g., for network issues, API rate limits)
 - Modular code structure for better maintainability
 - User-friendly interface with clear prompts and progress indicators
-- Restoring playlists (e.g., recreate from .txt or .csv backups) - *may be added in the future*
 
 ---
 
