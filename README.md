@@ -35,7 +35,7 @@ This project is maintained as time allows. Additional features may be added down
     ```bash
     pip install -r requirements.txt
     ```
-    # Note for macOS users:
+    **Note for macOS users:**
     If the above command doesn't work, run:
     ```bash
     python3 -m pip install -r requirements.txt
