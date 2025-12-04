@@ -79,9 +79,12 @@ This will create a new dll from the source code that you can run on your system.
 You will need the `clang` compiler (included with Xcode Command Line Tools). To compile, navigate to the project directory in your terminal and run:
 
 ```bash
-clang++ -dynamiclib -o analyzer.dylib analyzer.cpp -std=c++11
+clang++ -dynamiclib -o analyzer.dylib analyzer.cpp -std=c++17
 ```
-
+**Note:** If you download the prebuilt `analyzer.dylib` and macOS blocks it ("Developer cannot be verified"), run this command to allow it:
+```bash
+xattr -d com.apple.quarantine analyzer.dylib
+```
 ---
 
 ## Usage
