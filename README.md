@@ -50,7 +50,7 @@ This project is maintained as time allows. Additional features may be added down
       {
         "client_id": "YOUR_CLIENT_ID",
         "client_secret": "YOUR_CLIENT_SECRET",
-        "redirect_uri": "[http://127.0.0.1:8888/callback](http://127.0.0.1:8888/callback)"
+        "redirect_uri": "http://127.0.0.1:8888/callback"
       }
       ```
     - Alternatively, you can create a `config_local.json` file in the project root with the same structure. If this file exists, it will be used instead of `config.json`.
