@@ -1,1 +1,26 @@
-json.hpp linguist-vendored
+* text=auto
+
+# C++
+*.cpp text
+*.c   text
+*.h   text
+*.hpp text
+
+# Python
+*.py text
+
+# Data
+*.json text
+
+# Binaries
+*.dll   binary
+*.dylib binary
+*.so    binary
+*.exe   binary
+*.o     binary
+*.obj   binary
+*.lib   binary
+
+# Vendored Dependencies
+simdjson.cpp linguist-vendored
+simdjson.h   linguist-vendored

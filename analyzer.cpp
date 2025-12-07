@@ -5,39 +5,39 @@
 #include <vector>
 #include <utility>
 #include <algorithm>
-#include "json.hpp"
+#include "simdjson.h"
 
-using json = nlohmann::json;
+
 
 extern "C" {
     void display_top_10_artists(const char* raw_filename) {
-        std::string filename = raw_filename;
-        std::ifstream jsonFile(filename);
+        
+        simdjson::ondemand::parser parser;
+        simdjson::padded_string json;
 
-        if (!jsonFile.is_open()) {
-            std::cerr << "Error: Could not open " << filename << std::endl;
+        auto error  = simdjson::padded_string::load(raw_filename).get(json);
+
+        if (error) {
+            std::cerr << "Error: Could not load " << raw_filename << raw_filename << " (" << error_message(error) << ")" << std::endl;
             return;
         }
 
-        json jsonData;
-
-        try {
-            jsonData = json::parse(jsonFile);
-        } 
-        catch (json::parse_error& e){
-            std::cerr << "JSON parsing error: " << e.what() << std::endl;
-            return;
+        simdjson::ondemand::document doc;
+        error = parser.iterate(json).get(doc);
+        if (error) {
+            std::cerr << "JSON parsing error: " << simdjson::error_message(error) << std::endl;
         }
 
         std::unordered_map<std::string, int> artist_counts;
 
-        for (const auto& track : jsonData) {
-            if (!track.contains("artist") || track["artist"].is_null()) continue;
+        for (auto track : doc) {
+            std::string_view artist_sv;
 
-            std::string artist_name = track["artist"].get<std::string>();
-            if (artist_name.empty()) continue;
-            
-            artist_counts[artist_name]++;
+            if (track["artist"].get(artist_sv) == simdjson::SUCCESS) {
+                if (!artist_sv.empty()) {
+                    artist_counts[std::string(artist_sv)]++;
+                }
+            }
         }
 
         std::vector<std::pair<std::string, int>> sorted_artists(artist_counts.begin(), artist_counts.end());

@@ -67,7 +67,7 @@ For convenience, this project includes a pre-compiled C++ analyzer for Windows (
 
 You will need a C++ compiler like `g++`. To compile, navigate to the project directory in your terminal and run:
 ```bash
-g++ -shared -o analyzer.dll analyzer.cpp
+g++ -shared -o analyzer.dll analyzer.cpp simdjson.cpp -static
 ```
 This will create a new dll from the source code that you can run on your system.
 
@@ -78,7 +78,7 @@ This will create a new dll from the source code that you can run on your system.
 You will need the `clang` compiler (included with Xcode Command Line Tools). To compile, navigate to the project directory in your terminal and run:
 
 ```bash
-clang++ -dynamiclib -o analyzer.dylib analyzer.cpp -std=c++17
+clang++ -O3 -dynamiclib -arch x86_64 -arch arm64 -o analyzer.dylib analyzer.cpp simdjson.cpp
 ```
 **Note:** If you download the prebuilt `analyzer.dylib` and macOS blocks it ("Developer cannot be verified"), run this command to allow it:
 ```bash

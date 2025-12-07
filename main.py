@@ -48,7 +48,14 @@ logging.info("Successfully loaded shared library.")
 def cpp_integration(filename):
     json_filename = os.path.join("exports", f"{filename}.json")
     logging.info(f"Starting C++ analysis for: {filename}")
+
+    start_time = time.perf_counter()
     library.display_top_10_artists(json_filename.encode('utf-8'))
+
+    end_time = time.perf_counter()
+
+    exectution_time = end_time - start_time
+    logging.info(f"Display top 10 time: {exectution_time:.6f} seconds")
     logging.info("C++ analysis completed")
 
 def main():
