@@ -67,7 +67,7 @@ For convenience, this project includes a pre-compiled C++ analyzer for Windows (
 
 You will need a C++ compiler like `g++`. To compile, navigate to the project directory in your terminal and run:
 ```bash
-g++ -shared -o analyzer.dll analyzer.cpp simdjson.cpp -static
+g++ -O3 -shared -o analyzer.dll analyzer.cpp simdjson.cpp -static
 ```
 This will create a new dll from the source code that you can run on your system.
 
