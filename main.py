@@ -37,6 +37,7 @@ elif sys.platform == "darwin":
     library_name = "analyzer.dylib"
 else:
     library_name = "analyzer.so"
+
 library_path = os.path.join(os.getcwd(), library_name)
 library = ctypes.CDLL(library_path)
 
