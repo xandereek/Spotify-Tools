@@ -18,7 +18,7 @@ file_handler = logging.FileHandler('logs/spotify-tools.log', mode='w')
 file_handler.setLevel(logging.INFO)
 
 console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.WARNING)
+console_handler.setLevel(logging.ERROR)
 
 formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
 file_handler.setFormatter(formatter)
