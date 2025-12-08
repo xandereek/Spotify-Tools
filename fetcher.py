@@ -3,6 +3,7 @@ import requests
 import time
 from tqdm import tqdm
 from spotipy import SpotifyException
+from concurrent.futures import ThreadPoolExecutor
 
 
 
@@ -61,38 +62,24 @@ def playlist_fetcher(sp, playlist_id):
             return
 
     limit = 100
-    offset = 0
+    all_tracks = []
+    def get_page(offset):
+        return retry_api_call(lambda: sp.playlist_tracks(playlist_id, limit=limit, offset=offset))
+    
+    offsets = range(0, total, limit)
+    
 
     with tqdm(total=total, desc="Fetching Playlist", unit="track") as pbar:
-        while True:
-            try:
-                response = retry_api_call(lambda: sp.playlist_tracks(playlist_id, limit=limit, offset=offset))
-                items = response['items']
-            except (SpotifyException, requests.exceptions.RequestException) as e:
-                logging.error("Failed getting tracks after retries")
-                break 
+         with ThreadPoolExecutor(max_workers=10) as executor:
+              for response in executor.map(get_page, offsets):
+                   items = response['items']
+                   all_tracks.extend(items)
+                   pbar.update(len(items))
 
-            if not items:
-                break
-
-            yield from loop_tracks(items)
-            
-            offset += limit
-            pbar.update(len(items))
+    yield from loop_tracks(all_tracks)
 
 def fetch_liked_songs(sp):
-
-    """Fetches all of the current user's liked songs from Spotify and yields them.
-
-    This generator function paginates through the user's saved tracks,
-    displaying a progress bar during the process.
-
-    Args:
-        sp (spotipy.Spotify): An authenticated Spotipy client instance.
-
-    Yields:
-        tuple[str, str]: A tuple containing the track name and the primary artist's name.
-    """
+    """Fetches all liked songs using concurrent requests."""
     
     logging.info("Fetching liked songs..")
     
@@ -107,22 +94,18 @@ def fetch_liked_songs(sp):
         return
 
     limit = 50
-    offset = 0
+    all_tracks = []
+    
+    def get_page(offset):
+        return retry_api_call(lambda: sp.current_user_saved_tracks(limit=limit, offset=offset))
+    
+    offsets = range(0, total, limit)
     
     with tqdm(total=total, desc="Fetching liked songs", unit="track") as pbar:
-        while True:
-            try:
-                response = retry_api_call(lambda: sp.current_user_saved_tracks(limit=limit, offset=offset))
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            for response in executor.map(get_page, offsets):
                 items = response['items']
-            except (SpotifyException, requests.exceptions.RequestException) as e:
-                logging.error("Failed getting liked songs after retries")
-                break
-
-            if not items:
-                break
-
-            yield from loop_tracks(items)
-                
-            offset += limit
-            pbar.update(len(items))
-
+                all_tracks.extend(items)
+                pbar.update(len(items))
+    
+    yield from loop_tracks(all_tracks)
