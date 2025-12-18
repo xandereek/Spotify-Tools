@@ -155,7 +155,14 @@ def main():
     if not wants_analysis:
         print(f"\nExporting {playlist_name} to selected format...")
         logging.info(f"Starting export of {playlist_name}")
+
+        start_time = time.perf_counter()
         exporters[export_format](playlist_name, tracks_generator)
+        end_time = time.perf_counter()
+        
+        exectution_time = end_time - start_time
+        logging.info(f"Exporting tracks time: {exectution_time:.6f} seconds")
+
         logging.info("Export completed successfully")
     else:
         print("\nFetching tracks for analysis and export...")
@@ -164,7 +171,13 @@ def main():
         logging.info(f"Fetched {len(all_tracks)} tracks")
 
         print("\nExporting to JSON for analysis...")
+
+        start_time = time.perf_counter()
         exporter.export_to_json(playlist_name, all_tracks)
+        end_time = time.perf_counter()
+
+        exectution_time = end_time - start_time
+        logging.info(f"Exporting tracks time: {exectution_time:.6f} seconds")
 
         cpp_integration(playlist_name)
 
