@@ -70,7 +70,7 @@ def playlist_fetcher(sp, playlist_id):
     
 
     with tqdm(total=total, desc="Fetching Playlist", unit="track") as pbar:
-         with ThreadPoolExecutor(max_workers=10) as executor:
+         with ThreadPoolExecutor(max_workers=8) as executor:
               for response in executor.map(get_page, offsets):
                    items = response['items']
                    all_tracks.extend(items)
@@ -102,7 +102,7 @@ def fetch_liked_songs(sp):
     offsets = range(0, total, limit)
     
     with tqdm(total=total, desc="Fetching liked songs", unit="track") as pbar:
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        with ThreadPoolExecutor(max_workers=8) as executor:
             for response in executor.map(get_page, offsets):
                 items = response['items']
                 all_tracks.extend(items)

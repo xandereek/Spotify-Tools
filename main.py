@@ -8,6 +8,7 @@ import sys
 import validation
 import ctypes
 import os
+from slugify import slugify
 from spotipy import SpotifyException
 from typing import Dict, Any, Optional, Iterable, Tuple
 from constants import SourceOption
@@ -26,7 +27,8 @@ console_handler.setFormatter(formatter)
 
 logging.basicConfig(
     level=logging.INFO,
-    handlers=[file_handler, console_handler]
+    handlers=[file_handler, console_handler],
+    encoding='utf-8'
 )
 
 logging.info(f"System platform: {sys.platform}")
@@ -125,7 +127,7 @@ def main():
         if len(selected_playlists) == 1:
             playlist = selected_playlists[0]
             playlist_name = validation.name_sanitizer(playlist['name'])
-            logging.info(f"Fetching tracks from playlist: {playlist['name']}")
+            logging.info(f"Fetching tracks from playlist: {playlist_name}")
             tracks_generator = fetcher.playlist_fetcher(sp, playlist['id'])
             print(f"You selected: {playlist['name']}\n")
         else:
