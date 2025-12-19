@@ -57,8 +57,8 @@ def cpp_integration(filename):
 
     end_time = time.perf_counter()
 
-    exectution_time = end_time - start_time
-    logging.info(f"Display top 10 time: {exectution_time:.6f} seconds")
+    execution_time = end_time - start_time
+    logging.info(f"Display top 10 time: {execution_time:.6f} seconds")
     logging.info("C++ analysis completed")
 
 def main():
@@ -162,24 +162,24 @@ def main():
         exporters[export_format](playlist_name, tracks_generator)
         end_time = time.perf_counter()
         
-        exectution_time = end_time - start_time
-        logging.info(f"Exporting tracks time: {exectution_time:.6f} seconds")
+        execution_time = end_time - start_time
+        logging.info(f"Exporting tracks time: {execution_time:.6f} seconds")
 
         logging.info("Export completed successfully")
     else:
         print("\nFetching tracks for analysis and export...")
         logging.info("Converting generator to list for analysis")
+        start_time = time.perf_counter()
         all_tracks = list(tracks_generator)
         logging.info(f"Fetched {len(all_tracks)} tracks")
 
         print("\nExporting to JSON for analysis...")
 
-        start_time = time.perf_counter()
         exporter.export_to_json(playlist_name, all_tracks)
         end_time = time.perf_counter()
 
-        exectution_time = end_time - start_time
-        logging.info(f"Exporting tracks time: {exectution_time:.6f} seconds")
+        execution_time = end_time - start_time
+        logging.info(f"Exporting tracks time: {execution_time:.6f} seconds")
 
         cpp_integration(playlist_name)
 
