@@ -142,6 +142,10 @@ def main():
         playlist_name = "liked songs"
         tracks_generator = fetcher.fetch_liked_songs(sp)
 
+    elif playlist_or_liked == SourceOption.ALBUMS.value:
+        logging.info("User selected to export albums.")
+        playlist_name = "saved_albums"
+        tracks_generator = fetcher.fetch_saved_albums(sp)
     if not tracks_generator:
         logging.error("Could not fetch any tracks.")
         sys.exit(1)

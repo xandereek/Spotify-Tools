@@ -15,11 +15,11 @@ def name_sanitizer(name):
 def select_playlist_source():
     while True:
         try:
-            playlist_or_liked = int(input("Playlists(1) or Liked songs(2)?: "))
-            if playlist_or_liked in [1,2]:
+            playlist_or_liked = int(input("Playlists(1) or Liked songs(2)? or Albums(3): "))
+            if playlist_or_liked in [1,2,3]:
                 return playlist_or_liked
             else:
-                print("Please enter 1 or 2.")
+                print("Please enter 1, 2, or 3.")
         except ValueError:
             print("Invalid input. Please enter a number.")
 

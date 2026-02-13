@@ -34,6 +34,50 @@ def loop_tracks(items):
 
                     yield (track_name, artist_name)
 
+def loop_albums(items):
+     for i in items:
+          album = i.get('album')
+          if album:
+            album_name = album.get('name', 'Unknown Album')
+            artists = album.get('artists')
+            if artists:
+                artist_name = artists[0].get('name', 'Unknown Artist')
+            else:
+                artist_name = 'Unknown Artist'
+            
+            yield (album_name, artist_name)
+
+def fetch_saved_albums(sp):
+    """Fetches all saved albums using concurrent requests."""
+    
+    logging.info("Fetching saved albums..")
+    
+    try:
+        response = sp.current_user_saved_albums(limit=1)
+        total = response.get('total', 0)
+    except (SpotifyException, requests.exceptions.RequestException) as e:
+        logging.error(f"Error fetching saved albums: {e}")
+        return
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
+        return
+
+    limit = 50
+    all_albums = []
+    
+    def get_page(offset):
+        return retry_api_call(lambda: sp.current_user_saved_albums(limit=limit, offset=offset))
+    
+    offsets = range(0, total, limit)
+    
+    with tqdm(total=total, desc="Fetching saved albums", unit="album") as pbar:
+        with ThreadPoolExecutor(max_workers=8) as executor:
+            for response in executor.map(get_page, offsets):
+                items = response['items']
+                all_albums.extend(items)
+                pbar.update(len(items))
+    
+    yield from loop_albums(all_albums)
 
 def playlist_fetcher(sp, playlist_id):
 
