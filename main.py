@@ -8,7 +8,6 @@ import sys
 import validation
 import ctypes
 import os
-from slugify import slugify
 from spotipy import SpotifyException
 from typing import Dict, Any, Optional, Iterable, Tuple
 from constants import SourceOption
