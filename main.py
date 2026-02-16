@@ -81,13 +81,15 @@ def main():
         logging.error("Could not create a Spotify client.")
         sys.exit(1)
 
-    wants_analysis_input = input("Analyze playlist for top artists? (y/n): ").lower()
-    wants_analysis = wants_analysis_input.startswith('y')
-
-    logging.info(f"User wants analysis: {wants_analysis}")
-
     playlist_or_liked = validation.select_playlist_source()
     logging.info(f"User selected source: {playlist_or_liked}")
+
+    wants_analysis = False
+    if playlist_or_liked in [SourceOption.PLAYLIST.value, SourceOption.LIKED_SONGS.value]:
+        wants_analysis_input = input("Analyze playlist for top artists? (y/n): ").lower()
+        wants_analysis = wants_analysis_input.startswith('y')
+
+    logging.info(f"User wants analysis: {wants_analysis}")
     
     export_format = exporter.export_format()
     logging.info(f"User selected export format: {export_format}")
