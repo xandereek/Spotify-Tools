@@ -10,11 +10,18 @@ import ctypes
 import os
 from spotipy import SpotifyException
 from typing import Dict, Any, Optional, Iterable, Tuple
+from logging.handlers import RotatingFileHandler
 from constants import SourceOption
 
 os.makedirs("logs", exist_ok=True)
 
-file_handler = logging.FileHandler('logs/spotify-tools.log', mode='w')
+file_handler = RotatingFileHandler(
+    'logs/spotify-tools.log',
+    mode='a',
+    maxBytes=1 * 1024 * 1024,
+    backupCount=3,
+    encoding='utf-8'
+)
 file_handler.setLevel(logging.INFO)
 
 console_handler = logging.StreamHandler()
@@ -27,7 +34,6 @@ console_handler.setFormatter(formatter)
 logging.basicConfig(
     level=logging.INFO,
     handlers=[file_handler, console_handler],
-    encoding='utf-8'
 )
 
 logging.info(f"System platform: {sys.platform}")
