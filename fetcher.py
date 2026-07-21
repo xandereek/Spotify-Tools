@@ -3,7 +3,13 @@ import requests
 import time
 from tqdm import tqdm
 from spotipy import SpotifyException
+from spotipy.oauth2 import SpotifyOauthError
 from concurrent.futures import ThreadPoolExecutor
+
+
+class AuthenticationError(Exception):
+    """Raised when Spotify rejects our refresh token and re-auth is needed."""
+    pass
 
 
 
@@ -55,6 +61,9 @@ def fetch_saved_albums(sp):
     try:
         response = sp.current_user_saved_albums(limit=1)
         total = response.get('total', 0)
+    except SpotifyOauthError as e:
+        logging.error(f"Spotify authentication failed: {e}")
+        raise AuthenticationError(str(e)) from e
     except (SpotifyException, requests.exceptions.RequestException) as e:
         logging.error(f"Error fetching saved albums: {e}")
         return
@@ -98,6 +107,9 @@ def playlist_fetcher(sp, playlist_id):
     try:
             response = sp.playlist_tracks(playlist_id, limit=1)
             total = response.get('total', 0)
+    except SpotifyOauthError as e:
+            logging.error(f"Spotify authentication failed: {e}")
+            raise AuthenticationError(str(e)) from e
     except (SpotifyException, requests.exceptions.RequestException) as e:
             logging.error(f"Error fetching playlist data: {e}")
             return
@@ -130,6 +142,9 @@ def fetch_liked_songs(sp):
     try:
         response = sp.current_user_saved_tracks(limit=1)
         total = response.get('total', 0)
+    except SpotifyOauthError as e:
+        logging.error(f"Spotify authentication failed: {e}")
+        raise AuthenticationError(str(e)) from e
     except (SpotifyException, requests.exceptions.RequestException) as e:
         logging.error(f"Error fetching liked songs data: {e}")
         return

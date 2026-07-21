@@ -9,6 +9,7 @@ import validation
 import ctypes
 import os
 from spotipy import SpotifyException
+from fetcher import AuthenticationError
 from typing import Dict, Any, Optional, Iterable, Tuple
 from logging.handlers import RotatingFileHandler
 from constants import SourceOption
@@ -165,44 +166,53 @@ def main():
         "4": exporter.export_to_markdown
     }
 
-    if not wants_analysis:
-        print(f"\nExporting {playlist_name} to selected format...")
-        logging.info(f"Starting export of {playlist_name}")
-
-        start_time = time.perf_counter()
-        exporters[export_format](playlist_name, tracks_generator)
-        end_time = time.perf_counter()
-        
-        execution_time = end_time - start_time
-        logging.info(f"Exporting tracks time: {execution_time:.6f} seconds")
-
-        logging.info("Export completed successfully")
-    else:
-        print("\nFetching tracks for analysis and export...")
-        logging.info("Converting generator to list for analysis")
-        start_time = time.perf_counter()
-        all_tracks = list(tracks_generator)
-        logging.info(f"Fetched {len(all_tracks)} tracks")
-
-        print("\nExporting to JSON for analysis...")
-
-        exporter.export_to_json(playlist_name, all_tracks)
-        end_time = time.perf_counter()
-
-        execution_time = end_time - start_time
-        logging.info(f"Exporting tracks time: {execution_time:.6f} seconds")
-
-        cpp_integration(playlist_name)
-
-        if export_format == "2":
-            print("\nUser-requested JSON export was already created for the analysis.")
-            logging.info("Skipping duplicate JSON export")
-        else:
+    try:
+        if not wants_analysis:
             print(f"\nExporting {playlist_name} to selected format...")
-            logging.info(f"Creating additional export in format {export_format}")
-            exporters[export_format](playlist_name, all_tracks)
-            logging.info("Additional export completed")
-    
+            logging.info(f"Starting export of {playlist_name}")
+
+            start_time = time.perf_counter()
+            exporters[export_format](playlist_name, tracks_generator)
+            end_time = time.perf_counter()
+
+            execution_time = end_time - start_time
+            logging.info(f"Exporting tracks time: {execution_time:.6f} seconds")
+
+            logging.info("Export completed successfully")
+        else:
+            print("\nFetching tracks for analysis and export...")
+            logging.info("Converting generator to list for analysis")
+            start_time = time.perf_counter()
+            all_tracks = list(tracks_generator)
+            logging.info(f"Fetched {len(all_tracks)} tracks")
+
+            print("\nExporting to JSON for analysis...")
+
+            exporter.export_to_json(playlist_name, all_tracks)
+            end_time = time.perf_counter()
+
+            execution_time = end_time - start_time
+            logging.info(f"Exporting tracks time: {execution_time:.6f} seconds")
+
+            cpp_integration(playlist_name)
+
+            if export_format == "2":
+                print("\nUser-requested JSON export was already created for the analysis.")
+                logging.info("Skipping duplicate JSON export")
+            else:
+                print(f"\nExporting {playlist_name} to selected format...")
+                logging.info(f"Creating additional export in format {export_format}")
+                exporters[export_format](playlist_name, all_tracks)
+                logging.info("Additional export completed")
+    except AuthenticationError as e:
+        cache_path = ".cache"
+        logging.error(f"Spotify authentication failed, nothing exported: {e}")
+        if os.path.exists(cache_path):
+            os.remove(cache_path)
+        print("\nSpotify login is no longer valid, so nothing was exported. "
+              "Cleared the saved login — just run the program again to sign in fresh.")
+        sys.exit(1)
+
     logging.info("Application completed with no errors")
 
 if __name__ == '__main__':
