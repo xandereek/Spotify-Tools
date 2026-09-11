@@ -29,7 +29,7 @@ def retry_api_call(func) -> dict: # type: ignore
 
 def loop_tracks(items):
      for i in items:
-                track = i.get('track')
+                track = i.get('item')
                 if track:
                     track_name = track.get('name', 'Unknown Track')
                     artists = track.get('artists')
@@ -120,7 +120,7 @@ def playlist_fetcher(sp, playlist_id):
     limit = 100
     all_tracks = []
     def get_page(offset):
-        return retry_api_call(lambda: sp.playlist_tracks(playlist_id, limit=limit, offset=offset))
+        return retry_api_call(lambda: sp.playlist_items(playlist_id, limit=limit, offset=offset))
     
     offsets = range(0, total, limit)
     
