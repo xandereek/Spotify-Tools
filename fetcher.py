@@ -28,17 +28,20 @@ def retry_api_call(func) -> dict: # type: ignore
                     time.sleep(1)
 
 def loop_tracks(items):
-     for i in items:
-                track = i.get('item')
-                if track:
-                    track_name = track.get('name', 'Unknown Track')
-                    artists = track.get('artists')
-                    if artists:
-                        artist_name = artists[0].get('name', 'Unknown Artist')
-                    else:
-                        artist_name = 'Unknown Artist'
+    for i in items:
+        track = i.get('item') or i.get('track')
+        if not track:
+            continue
 
-                    yield (track_name, artist_name)
+        track_name = track.get('name', 'Unknown Track')
+        artists = track.get('artists')
+        artist_name = (
+            artists[0].get('name', 'Unknown Artist')
+            if artists
+            else 'Unknown Artist'
+        )
+
+        yield (track_name, artist_name)
 
 def loop_albums(items):
      for i in items:
