@@ -75,6 +75,8 @@ def main():
     for retries in range(max_retries):
         try:
             sp = auth.get_spotify_client()
+            current_user = sp.current_user()
+            current_user_id = current_user["id"]
             logging.info("Successfully authenticated with Spotify.")
             break
         except (SpotifyException, requests.exceptions.RequestException) as e:
@@ -87,7 +89,6 @@ def main():
     if sp is None:
         logging.error("Could not create a Spotify client.")
         sys.exit(1)
-
     playlist_or_liked = validation.select_playlist_source()
     logging.info(f"User selected source: {playlist_or_liked}")
 
@@ -124,7 +125,8 @@ def main():
             logging.error("Failed to receive playlists or no playlists found.")
             sys.exit(1)
 
-        available_playlists = results['items']
+        all_playlists = results['items']
+        available_playlists = [i for i in all_playlists if i["owner"]["id"] == current_user_id]
         print("\nYour Playlists:")
         for index, playlist in enumerate(available_playlists):
             print(f"{index+1}: {playlist['name']}")

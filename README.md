@@ -4,13 +4,14 @@ A Python script to export your Spotify playlists and liked songs to various form
 
 **Note**
 
-This project is maintained as time allows. Additional features may be added down the road.
+- **Playlist Ownership:** Due to Spotify Web API restrictions and permissions, this tool can only export playlists owned by your user account (not followed, collaborative, or third-party playlists).
+- **Maintenance:** This project is maintained as time allows. Additional features may be added down the road.
 
 ---
 
 ## Features
 
-- Fetch tracks from your public and private playlists.
+- Fetch tracks from your public and private owned playlists.
 - Fetch your liked songs.
 - Analyze any playlist to find your top 10 most frequent artists.
 - Export track data (track name, artist name) to:
@@ -22,8 +23,6 @@ This project is maintained as time allows. Additional features may be added down
 - Error handling (e.g., for network issues, API rate limits)
 - Modular code structure for better maintainability
 - User-friendly interface with clear prompts and progress indicators
-
----
 
 ## Setup
 

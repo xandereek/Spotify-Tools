@@ -105,7 +105,7 @@ def playlist_fetcher(sp, playlist_id):
 
     logging.info("Fetching playlist data..")
     try:
-            response = sp.playlist_tracks(playlist_id, limit=1)
+            response = sp.playlist_items(playlist_id, limit=1)
             total = response.get('total', 0)
     except SpotifyOauthError as e:
             logging.error(f"Spotify authentication failed: {e}")
